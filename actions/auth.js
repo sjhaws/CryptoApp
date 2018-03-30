@@ -2,23 +2,19 @@ import React from 'react';
 import axios from 'axios';
 import { setFlash } from '../actions/flash';
 import { setHeaders } from '../actions/headers';
-import {BASE_URL} from '../utils/urls'
-
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
-export const VALIDATE_TOKEN = 'VALIDATE_TOKEN';
+import { BASE_URL } from '../utils/urls';
 
 const login = user => {
-  return { type: LOGIN, user };
+  return { type: 'LOGIN', user };
 };
 
 const logout = () => {
-  return { type: LOGOUT };
+  return { type: 'LOGOUT' };
 };
 
-export const registerUser = (user, history) => {
+export const registerUser = (email, password, passwordConfirmation, history) => {
   return dispatch => {
-    axios.post(`${BASE_URL}/api/auth`, { ...user })
+    axios.post(`${BASE_URL}/api/auth`, { email, password, password_confirmation: passwordConfirmation })
       .then(res => {
         const { data: { data: user }, headers } = res;
         dispatch(setHeaders(headers));
@@ -57,9 +53,9 @@ export const handleLogout = history => {
   };
 };
 
-export const handleLogin = (user, history) => {
+export const handleLogin = (email, password, history) => {
   return dispatch => {
-    axios.post(`${BASE_URL}/api/auth/sign_in`, { ...user })
+    axios.post(`${BASE_URL}/api/auth/sign_in`, { email, password })
       .then(res => {
         const { data: { data: user }, headers } = res;
         dispatch(setHeaders(headers));
@@ -82,7 +78,7 @@ export const handleLogin = (user, history) => {
 
 export const validateToken = (callBack = () => {}) => {
   return dispatch => {
-    dispatch({ type: VALIDATE_TOKEN });
+    dispatch({ type: 'VALIDATE_TOKEN' });
     const headers = axios.defaults.headers.common;
     axios.get(`${BASE_URL}/api/auth/validate_token`, headers)
       .then(res => {

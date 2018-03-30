@@ -1,10 +1,6 @@
-import { 
-  COINS,
-  ADD_COIN,
-  REMOVE_COIN,
-} from '../actions/coins';
+import { COINS, ADD_COIN, REMOVE_COIN } from '../actions/coins';
 
-const coins = (state = [], action ) => {
+const coins = (state = [], action) => {
   switch (action.type) {
     case COINS:
       return action.coins;
@@ -12,7 +8,7 @@ const coins = (state = [], action ) => {
       return [...state, action.coin]
     case REMOVE_COIN:
       return state.filter( c => c.id !== action.id )
-    default:
+    default: 
       return state
   }
 }

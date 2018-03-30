@@ -6,21 +6,21 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import {Link} from 'react-router-native';
-import {connect} from 'react-redux';
-import {handleLogin, registerUser} from '../actions/auth';
+import { Link } from 'react-router-native';
+import { connect } from 'react-redux';
+import { handleLogin, registerUser } from '../actions/auth';
+
 
 class Auth extends React.Component {
   state = { email: '', password: '', passwordConfirmation: '' }
 
   handleSubmit = () => {
-    const {dispatch, history, type} = this.props
-    const {email, password, passwordConfirmation} = this.state
-    if (type === 'Register'){
+    const { dispatch, history, type } = this.props
+    const { email, password, passwordConfirmation } = this.state
+    if (type === "Register")
       dispatch(registerUser(email, password, passwordConfirmation, history))
-    } else {
+    else
       dispatch(handleLogin(email, password, history))
-    }
     this.setState({ email: '', password: '', passwordConfirmation: '' })
   }
 
@@ -28,6 +28,7 @@ class Auth extends React.Component {
     const { email, password, passwordConfirmation } = this.state
     let submit = false
     let error
+    // if (this.state.email && this.state.password)
     if (email && password)
       submit = true
     if (this.props.type === "Register") {
@@ -49,7 +50,7 @@ class Auth extends React.Component {
 
   render() {
     const { email, password, passwordConfirmation, error } = this.state
-    const {type} = this.props
+    const { type } = this.props
     const disabled = !this.canSubmit()
     return(
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -67,7 +68,7 @@ class Auth extends React.Component {
         />
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          placeholder="password"
           autoCapitalize="none"
           autoCorrect={false}
           value={password}
@@ -88,11 +89,11 @@ class Auth extends React.Component {
           <TouchableOpacity
             onPress={ disabled ? f => f : this.handleSubmit }
           >
-            <Text style={styles.button}>{type}</Text>
+            <Text style={styles.button}>{ type }</Text>
           </TouchableOpacity>
-          <Link to={type === 'Register' ? '/login' : '/register'}>
+          <Link to={ type === "Register" ? "/login" : "/register" }>
             <Text style={styles.link}>
-            {type === 'Register' ? 'Login' : 'Register'}
+              { type === "Register" ? "Login" : "Register"}
             </Text>
           </Link>
       </KeyboardAvoidingView>
@@ -109,11 +110,11 @@ const styles = StyleSheet.create({
   },
   error: { color: 'red' },
     title: {
-      color: 'white',
-      fontSize: 40,
-      textAlign: 'center',
-      marginBottom: 10,
-    },
+    color: 'white',
+    fontSize: 40,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
   input: {
     marginLeft: 10,
     marginRight: 10,
@@ -132,12 +133,12 @@ const styles = StyleSheet.create({
     width: 300,
     marginLeft: 10,
     marginRight: 10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  link:{
+  link: {
     color: 'lightblue',
     fontSize: 20,
-  }
+  },
 })
 
 export default connect()(Auth);
