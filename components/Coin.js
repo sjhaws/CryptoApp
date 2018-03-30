@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { ListItem, Card } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
-import {removeCoin} from '../actions/coins'
-import {connect} from 'react-redux';
+import { removeCoin } from '../actions/coins';
+import { connect } from 'react-redux';
 
 class Coin extends React.Component {
   state = { color: 'green' }
@@ -22,11 +22,11 @@ class Coin extends React.Component {
   }
 
   swipeButtons = () => {
-    const {dispatch, id} = this.props
+    const { dispatch, id } = this.props
     return [{
       text: "Delete",
-      backgroundColor: 'red',
-      onPres: () => {dispatch(removeCoin(id))}
+      backgroundColor: "red",
+      onPress: () => { dispatch(removeCoin(id))}
     }]
   }
 
@@ -37,7 +37,7 @@ class Coin extends React.Component {
       <Swipeout
         right={this.swipeButtons()}
         autoClose={true}
-        backgroundColor='transparent'
+        backgroundColor="transparent"
       >
         <ListItem
           rightTitle={`$${ parseFloat(price).toFixed(4) }`}
